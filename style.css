@@ -1,0 +1,143 @@
+/* 🌸 General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* 🌸 Body setup */
+body {
+  background-color: #ffc6e2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* 🌸 Main app container */
+.app-container {
+  display: flex;
+  background-color: #ffd6eb;
+  width: 90%;
+  height: 90%;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+/* 🌸 Sidebar */
+.sidebar {
+  background-color: #ffe2f1;
+  width: 15%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  border-radius: 20px 0 0 20px;
+}
+
+.side-btn {
+  width: 120px;
+  height: 60px;
+  background-color: #ffb3d9;
+  border: none;
+  border-radius: 40px;
+  font-size: 28px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.side-btn:hover {
+  background-color: #ff99cc;
+}
+
+/* 🌸 Workspace (main area) */
+.workspace {
+  flex: 1;
+  background-color: #ffe6f2;
+  border-radius: 0 20px 20px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  position: relative;
+}
+
+/* 🌸 Title */
+.title {
+  font-size: 28px;
+  color: #b84d7a;
+  margin-bottom: 15px;
+  font-weight: 700;
+}
+
+/* 🌸 Canvas area */
+.canvas-container {
+  background-color: white;
+  width: 90%;
+  height: 90%;
+  border-radius: 20px;
+  position: relative;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+#canvas-area {
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  position: relative;
+}
+
+#capture-btn {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  background-color: #ffb3d9;
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 22px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#capture-btn:hover {
+  background-color: #ff99cc;
+}
+
+/* 🌸 Message box */
+
+
+#message-input {
+  width: 90%;
+  border: none;
+  border-radius: 15px;
+  padding: 10px;
+  font-size: 16px;
+  resize: none;
+  outline: none;
+  background-color: white;
+}
+
+#add-text-btn {
+  background-color: #ffb3d9;
+  border: none;
+  border-radius: 10px;
+  font-size: 22px;
+  padding: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#add-text-btn:hover {
+  background-color: #ff99cc;
+}
+#foot{
+ color: #b84d7a;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ font-weight: bold;
+ font-family: 'Times New Roman', Times, serif;
+}
