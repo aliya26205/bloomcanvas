@@ -141,3 +141,30 @@ body {
  font-weight: bold;
  font-family: 'Times New Roman', Times, serif;
 }
+.panel-area {
+  width: 90%;
+  height: 180px;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 15px;
+  overflow-x: auto;
+  transition: all 0.3s ease;
+}
+
+.panel-area img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.panel-area img:hover {
+  transform: scale(1.2);
+}
