@@ -14,23 +14,28 @@
       <button class="side-btn" id="bg-btn" data-panel="backgrounds">🎨</button>
       <button class="side-btn" id="wt-btn" data-panel="text">📝</button>
     </aside>
-    <main class="workspace">
+ 
 
-  <!-- Panel where images will appear -->
-  <div id="panel-area" class="panel-area"></div>
+   <main class="workspace">
+  <h1 class="title">BloomCanvas</h1>
+
+  <!-- Side-by-side layout -->
+  <div class="main-layout">
+    <!-- Left panel where flowers/pots show -->
+    <div id="panel-area" class="panel-area">
+      <!-- Flower or pot images will appear here -->
+    </div>
+
+    <!-- Right canvas where user arranges flowers -->
+    <div class="canvas-container">
+      <div id="canvas-area">
+        <textarea id="message-input" placeholder="Write something sweet..."></textarea>
+        <button id="capture-btn" title="Save your design 📸">📸</button>
+      </div>
+    </div>
+  </div>
 </main>
 
-    <!-- Main workspace -->
-    <main class="workspace">
-    
-      <h1 class="title">BloomCanvas</h1>
-      <div class="canvas-container">
-        <div id="canvas-area">
-          <!-- Pot + Flowers will appear here -->
-          <button id="capture-btn" title="Save your design 📸">📸</button>
-        </div>
-      </div>
-  
 <footer>
    <div id="foot"> Made with love by aliya </div></footer>
   <script src="script.js"></script>

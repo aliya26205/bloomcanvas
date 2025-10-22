@@ -52,7 +52,7 @@ body {
   background-color: #ff99cc;
 }
 
-/* 🌸 Workspace (main area) */
+/* 🌸 Workspace (main area) 
 .workspace {
   flex: 1;
   background-color: #ffe6f2;
@@ -62,7 +62,7 @@ body {
   align-items: center;
   padding: 20px;
   position: relative;
-}
+}*/
 
 /* 🌸 Title */
 .title {
@@ -72,7 +72,7 @@ body {
   font-weight: 700;
 }
 
-/* 🌸 Canvas area */
+/* 🌸 Canvas area 
 .canvas-container {
   background-color: white;
   width: 90%;
@@ -87,7 +87,7 @@ body {
   height: 100%;
   border-radius: 20px;
   position: relative;
-}
+}*/
 
 #capture-btn {
   position: absolute;
@@ -141,6 +141,7 @@ body {
  font-weight: bold;
  font-family: 'Times New Roman', Times, serif;
 }
+/*
 .panel-area {
   width: 90%;
   height: 180px;
@@ -167,4 +168,86 @@ body {
 
 .panel-area img:hover {
   transform: scale(1.2);
+}
+*/
+.workspace {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #ffe6f2;
+  border-radius: 0 20px 20px 0;
+  padding: 20px;
+}
+
+/* Put panel and canvas side by side */
+.main-layout {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
+  width: 100%;
+  margin-top: 20px;
+}
+
+/* Left panel for flowers/pots */
+.panel-area {
+  width: 30%;
+  height: 450px;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 10px;
+  overflow-y: auto;
+}
+
+/* Right canvas */
+.canvas-container {
+  width: 60%;
+  height: 450px;
+  background-color: white;
+  border-radius: 20px;
+  position: relative;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#canvas-area {
+  width: 90%;
+  height: 90%;
+  border-radius: 20px;
+  border: 2px dashed #f8a5c2;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#message-input {
+  width: 80%;
+  height: 60px;
+  border: 1px solid #f8a5c2;
+  border-radius: 10px;
+  padding: 5px;
+  margin-bottom: 10px;
+}
+
+#capture-btn {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  background-color: #f8a5c2;
+  border: none;
+  border-radius: 12px;
+  padding: 10px;
+  font-size: 20px;
+  cursor: pointer;
 }
