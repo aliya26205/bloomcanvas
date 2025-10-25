@@ -11,34 +11,59 @@ body {
   background-color: #ffc6e2;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   height: 100vh;
+  padding: 20px 0;
 }
 
 /* 🌸 Main app container */
 .app-container {
   display: flex;
+  flex-direction: column;
   background-color: #ffd6eb;
-  width: 90%;
-  height: 90%;
+  width: 95%;
+  max-width: 1400px;
+  height: 90vh;
   border-radius: 20px;
   overflow: hidden;
 }
 
+/* 🌸 Header */
+header {
+  background-color: #ffd6eb;
+  padding: 15px 20px;
+  text-align: center;
+ 
+}
+
+.title {
+  font-size: 28px;
+  color: #b84d7a;
+  font-weight: 700;
+}
+
+/* 🌸 Main workspace layout */
+.main-layout {
+  flex: 1;
+  display: flex;
+  gap: 10px;
+  padding: 15px;
+}
+
 /* 🌸 Sidebar */
 .sidebar {
-  background-color: #ffe2f1;
-  width: 15%;
+ 
+  width: 12%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  gap: 30px;
+  gap: 20px;
+  padding-top: 20px;
   border-radius: 20px 0 0 20px;
 }
 
 .side-btn {
-  width: 120px;
+  width: 100%;
   height: 60px;
   background-color: #ffb3d9;
   border: none;
@@ -50,53 +75,67 @@ body {
 
 .side-btn:hover {
   background-color: #ff99cc;
+  transform: scale(1.05);
 }
 
-/* 🌸 Workspace (main area) 
-.workspace {
+/* 🌸 Panel area (middle) */
+.panel-area {
   flex: 1;
-  background-color: #ffe6f2;
-  border-radius: 0 20px 20px 0;
+  background-color: #ffffff;
+  border-radius: 20px;
+  padding: 15px;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  padding: 20px;
-  position: relative;
-}*/
-
-/* 🌸 Title */
-.title {
-  font-size: 28px;
-  color: #b84d7a;
-  margin-bottom: 15px;
-  font-weight: 700;
+  gap: 15px;
+  overflow-x: auto;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
-/* 🌸 Canvas area 
+.panel-area img,
+.panel-area .bg-option {
+  width: 80px;
+  height: 80px;
+  border-radius: 12px;
+  cursor: pointer;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.panel-area img:hover,
+.panel-area .bg-option:hover {
+  transform: scale(1.2);
+}
+
+/* 🌸 Canvas container (right) */
 .canvas-container {
-  background-color: white;
-  width: 90%;
-  height: 90%;
+  flex: 2;
+  background-color: #fff0f5;
   border-radius: 20px;
   position: relative;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
 #canvas-area {
-  width: 100%;
-  height: 100%;
+  width: 95%;
+  height: 90%;
+  border: 2px dashed #ff99cc;
   border-radius: 20px;
   position: relative;
-}*/
+  background-color: #ffffff;
+}
 
+/* 🌸 Capture button inside canvas */
 #capture-btn {
   position: absolute;
   right: 20px;
   bottom: 20px;
   background-color: #ffb3d9;
   border: none;
-  border-radius: 10px;
-  padding: 10px;
+  border-radius: 12px;
+  padding: 10px 15px;
   font-size: 22px;
   cursor: pointer;
   transition: 0.3s;
@@ -104,150 +143,54 @@ body {
 
 #capture-btn:hover {
   background-color: #ff99cc;
+  transform: scale(1.1);
 }
 
-/* 🌸 Message box */
-
-
-#message-input {
-  width: 90%;
-  border: none;
-  border-radius: 15px;
-  padding: 10px;
-  font-size: 16px;
-  resize: none;
-  outline: none;
-  background-color: white;
+/* 🌸 Footer */
+footer {
+  background-color: #ffd6eb;
+  padding: 10px 0;
+  box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
 }
 
-#add-text-btn {
-  background-color: #ffb3d9;
-  border: none;
-  border-radius: 10px;
-  font-size: 22px;
-  padding: 10px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-#add-text-btn:hover {
-  background-color: #ff99cc;
-}
-#foot{
- color: #b84d7a;
- display: flex;
- justify-content: center;
- align-items: center;
- font-weight: bold;
- font-family: 'Times New Roman', Times, serif;
-}
-/*
-.panel-area {
-  width: 90%;
-  height: 180px;
-  background-color: white;
-  border-radius: 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
-  padding: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: start;
-  gap: 15px;
-  overflow-x: auto;
-  transition: all 0.3s ease;
-}
-
-.panel-area img {
-  width: 80px;
-  height: 80px;
-  object-fit: contain;
-  cursor: pointer;
-  transition: transform 0.3s ease;
-}
-
-.panel-area img:hover {
-  transform: scale(1.2);
-}
-*/
-.workspace {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #ffe6f2;
-  border-radius: 0 20px 20px 0;
-  padding: 20px;
-}
-
-/* Put panel and canvas side by side */
-.main-layout {
+#foot {
+  color: #b84d7a;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
-  gap: 20px;
+  align-items: center;
+  font-weight: bold;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+/* 🌸 Text area for text panel */
+.message-input {
   width: 100%;
-  margin-top: 20px;
-}
-
-/* Left panel for flowers/pots */
-.panel-area {
-  width: 30%;
-  height: 450px;
-  background-color: white;
-  border-radius: 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  padding: 15px;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  justify-content: center;
-  gap: 10px;
-  overflow-y: auto;
-}
-
-/* Right canvas */
-.canvas-container {
-  width: 60%;
-  height: 450px;
-  background-color: white;
-  border-radius: 20px;
-  position: relative;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-#canvas-area {
-  width: 90%;
-  height: 90%;
-  border-radius: 20px;
-  border: 2px dashed #f8a5c2;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-#message-input {
-  width: 80%;
-  height: 60px;
-  border: 1px solid #f8a5c2;
-  border-radius: 10px;
-  padding: 5px;
-  margin-bottom: 10px;
-}
-
-#capture-btn {
-  position: absolute;
-  bottom: 15px;
-  right: 15px;
-  background-color: #f8a5c2;
-  border: none;
+  min-height: 80px;
   border-radius: 12px;
   padding: 10px;
-  font-size: 20px;
-  cursor: pointer;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  resize: none;
+  outline: none;
+}
+
+/* Optional scrollbar styling */
+.panel-area::-webkit-scrollbar {
+  height: 6px;
+}
+
+.panel-area::-webkit-scrollbar-thumb {
+  background-color: #ffb3d9;
+  border-radius: 3px;
+}
+.workspace {
+  display: flex;
+  flex: 1; /* take remaining height */
+  gap: 10px;
+}
+
+.main-layout {
+  flex: 1;
+  display: flex; /* panel + canvas side by side */
+  gap: 10px;
 }

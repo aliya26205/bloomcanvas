@@ -11,6 +11,7 @@ buttons.forEach(button => {
         <img src="assets/flower1.png" alt="Flower 1">
         <img src="assets/flower2.png" alt="Flower 2">
         <img src="assets/flower3.png" alt="Flower 3">
+        <img src="assets/flower4.png" alt="Flower 4">
       `;
     } 
     else if (panelType === "pots") {
@@ -27,7 +28,7 @@ buttons.forEach(button => {
       `;
     } 
     else if (panelType === "text") {
-      panelArea.innerHTML = `<textarea placeholder="Write something sweet..."></textarea>`;
+      panelArea.innerHTML = `<textarea class='message-input' placeholder="Write something sweet..."></textarea>`;
     }
   });
 });
