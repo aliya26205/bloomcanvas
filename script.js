@@ -27,6 +27,8 @@ buttons.forEach((button) => {
         <img src="assets/flower11.png">
         <img src="assets/flower13.png">
         <img src="assets/flower14.png">
+        <img src="assets/flower15.png">
+        <img src="assets/flower16.png">
       `;
     } else if (panelType === "pots") {
       panelArea.innerHTML = `
@@ -56,7 +58,6 @@ buttons.forEach((button) => {
 <div class="bg-option" style="background:#FFE5F3;"></div>   <!-- pastel rose -->
 <div class="bg-option" style="background:#F6EDE6;"></div>   <!-- nude beige -->
 <div class="bg-option" style="background:#E8F4F9;"></div>   <!-- sky mist -->
-<div class="bg-option" style="background:#F4F4F4;"></div>   <!-- soft grey white -->
 
 <div class="bg-option no-bg">
     <span class="no-bg-mark">✕</span>
