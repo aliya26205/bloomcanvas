@@ -337,5 +337,20 @@ footer {
 .pot {
   overflow: hidden; /* hides the lower part of stems inside */
 }
+.bg-option.no-bg {
+    background: #ffffff;
+    position: relative;
+    border: 1px solid #ccc;
+}
+
+.no-bg-mark {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+    color: #888;
+    pointer-events: none;
+}
 
 
