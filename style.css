@@ -85,33 +85,7 @@ header {
   transform: scale(1.05);
 }
 
-/* 🌸 Panel area (middle) */
-.panel-area {
-  flex: 1;
-  background-color: #ffffff;
-  border-radius: 20px;
-  padding: 15px;
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  overflow-x: auto;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
 
-.panel-area img,
-.panel-area .bg-option {
-  width: 80px;
-  height: 80px;
-  border-radius: 12px;
-  cursor: pointer;
-  object-fit: contain;
-  transition: transform 0.3s ease;
-}
-
-.panel-area img:hover,
-.panel-area .bg-option:hover {
-  transform: scale(1.2);
-}
 
 /* 🌸 Canvas container (right) */
 .canvas-container {
@@ -169,27 +143,8 @@ footer {
   font-family: 'Times New Roman', Times, serif;
 }
 
-/* 🌸 Text area for text panel */
-.message-input {
-  width: 100%;
-  min-height: 80px;
-  border-radius: 12px;
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  resize: none;
-  outline: none;
-}
 
-/* Optional scrollbar styling */
-.panel-area::-webkit-scrollbar {
-  height: 6px;
-}
 
-.panel-area::-webkit-scrollbar-thumb {
-  background-color: #ffb3d9;
-  border-radius: 3px;
-}
 .workspace {
   display: flex;
   flex: 1; /* take remaining height */
@@ -216,30 +171,7 @@ footer {
 #clear-canvas:hover {
   background-color: #ff99cc;
 }
-.text-panel {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
 
-.text-controls {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.text-controls button {
-  border: none;
-  padding: 5px 10px;
-  cursor: pointer;
-  background: #eee;
-  border-radius: 5px;
-  transition: background 0.2s;
-}
-
-.text-controls button:hover {
-  background: #d6d6d6;
-}
  .resizable {
   transition: transform 0.1s;
 }
@@ -251,3 +183,159 @@ footer {
 .canvas-item .resize-handle:hover {
   transform: scale(1.1);
 }
+/* 🌸 Panel area (middle) */
+.panel-area {
+  flex: 1;
+  background-color: #ffffff;
+  border-radius: 20px;
+  padding: 15px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-items: center;
+  align-items: center;
+  gap: 15px;
+  overflow-y: auto;
+  max-height: 350px; /* you can adjust height */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+
+.panel-area img,
+.panel-area .bg-option {
+  width: 80px;
+  height: 80px;
+  border-radius: 12px;
+  cursor: pointer;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.panel-area img:hover,
+.panel-area .bg-option:hover {
+  transform: scale(1.2);
+}
+/* Optional scrollbar styling */
+.panel-area::-webkit-scrollbar {
+    width: 6px;
+}
+
+.panel-area::-webkit-scrollbar-thumb {
+  background-color: #ffb3d9;
+  border-radius: 3px;
+}
+.text-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  height: 100%;
+  background: #ffe6f2;
+  border-radius: 20px;
+  padding: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  overflow: hidden; /* removes scrollbars */
+  grid-column: span 3;
+}
+.text-panel form,
+.text-panel .message-input,
+.text-controls {
+  width: 100%;
+}
+
+
+.text-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+   justify-content: flex-start;
+}
+
+.text-controls button {
+  border: none;
+  padding: 6px 10px;
+  cursor: pointer;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  font-weight: bold;
+  color: #5a2b45;
+  transition: transform .15s ease, background .15s ease;
+}
+
+.text-controls button:hover {
+  background: #ffe6f2;
+  transform: scale(1.05);
+}
+
+
+.text-controls button:hover {
+  background: #d6d6d6;
+}
+/* 🌸 Text area for text panel */
+.message-input {
+  width: 100%;
+  height: 80px;
+  border-radius: 12px;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  resize: none;
+  overflow: hidden;
+  outline: none;
+  background: #fff;
+  box-sizing: border-box;
+}
+
+
+#text-ok-btn {
+  align-self: flex-end;
+  padding: 8px 24px;
+  margin-top: 10px;
+  border-radius: 12px;
+  border: none;
+  background: linear-gradient(180deg,#ffb3d9,#ff99cc);
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(249,118,177,0.18);
+  transition: transform .15s ease;
+}
+#text-ok-btn:hover {
+  transform: translateY(-2px);
+} 
+.message-input::-webkit-scrollbar {
+  display: none;
+}
+.image-controls {
+  display: none; /* hide by default */
+  position: absolute;
+  top: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+.image-container.selected .image-controls {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+.stem {
+  position: relative;
+  z-index: 1; /* stay behind the pot */
+}
+
+.pot {
+  position: relative;
+  z-index: 5; /* pot always in front */
+}
+.flower, .plant {
+  position: relative;
+}
+.pot {
+  overflow: hidden; /* hides the lower part of stems inside */
+}
+
+

@@ -18,11 +18,24 @@ buttons.forEach(button => {
         <img src="assets/flower2.png">
         <img src="assets/flower3.png">
         <img src="assets/flower4.png">
+        <img src="assets/flower5.png">
+        <img src="assets/flower6.png">
+        <img src="assets/flower7.png">
+        <img src="assets/flower8.png">
+        <img src="assets/flower9.png">
+        <img src="assets/flower10.png">
+        <img src="assets/flower11.png">
+        <img src="assets/flower13.png">
+        <img src="assets/flower14.png">
       `;
     } else if (panelType === "pots") {
       panelArea.innerHTML = `
         <img src="assets/pot1.png">
         <img src="assets/pot2.png">
+        <img src="assets/pot3.png">
+        <img src="assets/pot4.png">
+        <img src="assets/pot5.png">
+        <img src="assets/pot6.png">
       `;
     } else if (panelType === "backgrounds") {
       panelArea.innerHTML = `
@@ -35,6 +48,7 @@ buttons.forEach(button => {
         <div class="bg-option" style="background:#c6f6d5;"></div>
         <div class="bg-option" style="background:#d8b4fe;"></div>
         <div class="bg-option" style="background:#bde0fe;"></div>
+         <div class="bg-option" style="background:#1111;"></div>
       `;
     } else if (panelType === "text") {
       panelArea.innerHTML = `
@@ -106,8 +120,8 @@ function addImage(src) {
   wrapper.appendChild(img);
   canvasArea.appendChild(wrapper);
 
-  if (src.includes("flower")) wrapper.style.zIndex = 3;
-  else if (src.includes("pot")) wrapper.style.zIndex = 2;
+  if (src.includes("flower")) wrapper.style.zIndex = 2;
+  else if (src.includes("pot")) wrapper.style.zIndex = 3;
 
   makeDraggable(wrapper);
   makeResizable(wrapper);
@@ -176,11 +190,31 @@ function createWrapper() {
 }
 
 // 🔘 Show active controls only on selected element
+// function setActive(wrapper) {
+//   canvasArea.querySelectorAll('div[style*="position: absolute"]').forEach(w => {
+//     w.querySelectorAll('.delete-btn, .resize-handle, .rotate-handle').forEach(btn => btn.style.display = 'none');
+//   });
+//   wrapper.querySelectorAll('.delete-btn, .resize-handle, .rotate-handle').forEach(btn => btn.style.display = 'flex');
+//   wrapper.addEventListener('mousedown', () => setActive(wrapper));
+// }
+// 🔘 Show active controls only on selected element + bring front
 function setActive(wrapper) {
+
+  // Bring selected element to front
+  let maxZ = 0;
+  document.querySelectorAll('#canvas-area > div').forEach(el => {
+    maxZ = Math.max(maxZ, parseInt(el.style.zIndex) || 0);
+  });
+  wrapper.style.zIndex = maxZ + 1;
+
+  // Hide controls for all objects
   canvasArea.querySelectorAll('div[style*="position: absolute"]').forEach(w => {
     w.querySelectorAll('.delete-btn, .resize-handle, .rotate-handle').forEach(btn => btn.style.display = 'none');
   });
+
+  // Show controls for selected object
   wrapper.querySelectorAll('.delete-btn, .resize-handle, .rotate-handle').forEach(btn => btn.style.display = 'flex');
+
   wrapper.addEventListener('mousedown', () => setActive(wrapper));
 }
 
@@ -317,8 +351,23 @@ function makeRotatable(wrapper) {
 }
 
 // 📸 Capture Canvas
+// const hideElems = document.querySelectorAll('.delete-btn, .resize-handle, .rotate-handle');
+// captureBtn.addEventListener('click', () => {
+//   hideElems.forEach(e => (e.style.display = 'none'));
+
+//   html2canvas(canvasArea).then(canvas => {
+//     const link = document.createElement('a');
+//     link.download = 'my-bloom-design.png';
+//     link.href = canvas.toDataURL();
+//     link.click();
+//     hideElems.forEach(e => (e.style.display = 'flex'));
+//   });
+// });
 captureBtn.addEventListener('click', () => {
-  const hideElems = document.querySelectorAll('.delete-btn, .resize-handle, .rotate-handle');
+  // Re-select control icons each time before capturing
+  const hideElems = canvasArea.querySelectorAll('.delete-btn, .resize-handle, .rotate-handle');
+
+  // Hide all control icons
   hideElems.forEach(e => (e.style.display = 'none'));
 
   html2canvas(canvasArea).then(canvas => {
@@ -326,6 +375,8 @@ captureBtn.addEventListener('click', () => {
     link.download = 'my-bloom-design.png';
     link.href = canvas.toDataURL();
     link.click();
+
+    // Restore controls after capture
     hideElems.forEach(e => (e.style.display = 'flex'));
   });
 });
@@ -335,3 +386,15 @@ clearCanvasBtn.addEventListener('click', () => {
   canvasArea.innerHTML = '';
   canvasArea.style.background = '';
 });
+
+// Hide controls when clicking empty canvas
+canvasArea.addEventListener("mousedown", (e) => {
+  if (e.target === canvasArea) {
+    canvasArea.querySelectorAll('div[style*="position: absolute"]').forEach(w => {
+      w.querySelectorAll('.delete-btn, .resize-handle, .rotate-handle').forEach(btn => {
+        btn.style.display = 'none';
+      });
+    });
+  }
+});
+
