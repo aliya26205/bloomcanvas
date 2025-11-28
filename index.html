@@ -1,45 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>BloomCanvas 🌸</title>
   <link rel="stylesheet" href="style.css" />
 </head>
-<body> 
+
+<body>
   <div class="app-container">
     <header>
       <h1 class="title">BloomCanvas</h1>
     </header>
-     <div class="workspace" style="display:flex; flex:1; gap:10px;">
-    <aside class="sidebar">
-       <button class="side-btn" id="flowers-btn" data-panel="flowers">🌸</button>
-       <button class="side-btn" id="pots-btn" data-panel="pots">🪴</button>
-       <button class="side-btn" id="bg-btn" data-panel="backgrounds">🎨</button>
-       <button class="side-btn" id="wt-btn" data-panel="text">📝</button>
-    </aside>
-    <main class="workspace">
-       <div class="main-layout">
-         <section id="panel-area" class="panel-area">
+    <div class="workspace">
+      <aside class="sidebar">
+        <button class="side-btn" id="flowers-btn" data-panel="flowers">🌸</button>
+        <button class="side-btn" id="pots-btn" data-panel="pots">🪴</button>
+        <button class="side-btn" id="bg-btn" data-panel="backgrounds">🎨</button>
+        <button class="side-btn" id="wt-btn" data-panel="text">📝</button>
+      </aside>
+      <main class="workspace">
+        <div class="main-layout">
+          <section id="panel-area" class="panel-area">
 
-         </section>
-         <section class="canvas-container">
-           <div id="canvas-area">
+          </section>
+          <section class="canvas-container">
+            <div id="canvas-area">
 
-             
-           </div>
-         </section>
-         <button id="capture-btn" title="Save your design 📸">📸</button>
+
+            </div>
+          </section>
+          <button id="capture-btn" title="Save your design 📸">📸</button>
           <button id="clear-canvas">Clear Canvas</button>
-       </div>
-       </div>
-    </main>
-    <footer> 
-        <div id="foot">Made with love by Aliya 💖</div> 
+        </div>
+      </main>
+    </div>
+    <footer>
+      <div id="foot">Made with love by Aliya 💖</div>
     </footer>
   </div>
-  <script src="script.js"></script> 
+  <script src="script.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
 </body>
+
 </html>

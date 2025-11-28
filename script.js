@@ -103,22 +103,22 @@ buttons.forEach((button) => {
       boldBtn.addEventListener(
         "click",
         () =>
-          (textarea.style.fontWeight =
-            textarea.style.fontWeight === "bold" ? "normal" : "bold")
+        (textarea.style.fontWeight =
+          textarea.style.fontWeight === "bold" ? "normal" : "bold")
       );
       italicBtn.addEventListener(
         "click",
         () =>
-          (textarea.style.fontStyle =
-            textarea.style.fontStyle === "italic" ? "normal" : "italic")
+        (textarea.style.fontStyle =
+          textarea.style.fontStyle === "italic" ? "normal" : "italic")
       );
       underlineBtn.addEventListener(
         "click",
         () =>
-          (textarea.style.textDecoration =
-            textarea.style.textDecoration === "underline"
-              ? "none"
-              : "underline")
+        (textarea.style.textDecoration =
+          textarea.style.textDecoration === "underline"
+            ? "none"
+            : "underline")
       );
 
       document.getElementById("text-ok-btn").addEventListener("click", () => {
@@ -451,5 +451,82 @@ canvasArea.addEventListener("mousedown", (e) => {
           btn.style.display = "none";
         });
       });
+  }
+});
+// BG & text-panel hookup (add at bottom of script.js)
+document.addEventListener('DOMContentLoaded', () => {
+  const canvasArea = document.getElementById('canvas-area');
+  if (!canvasArea) return;
+
+  // helper to set background (color or image)
+  function setCanvasBackground(value) {
+    if (!value) return;
+    // if looks like a color (# or rgb)
+    if (/^#|^rgb|^hsl/.test(value)) {
+      canvasArea.style.backgroundImage = 'none';
+      canvasArea.style.backgroundColor = value;
+    } else {
+      // otherwise treat as image url (or src)
+      canvasArea.style.backgroundImage = `url("${value}")`;
+      canvasArea.style.backgroundSize = 'cover';
+      canvasArea.style.backgroundPosition = 'center';
+      canvasArea.style.backgroundColor = '';
+    }
+  }
+
+  // click handlers for .bg-option elements
+  document.querySelectorAll('.bg-option').forEach(el => {
+    el.style.cursor = 'pointer';
+    el.addEventListener('click', () => {
+      // prefer data-bg attribute, then data-type, then contained img src
+      const bg = el.dataset.bg || '';
+      const img = el.querySelector('img');
+      if (bg) setCanvasBackground(bg);
+      else if (img && img.src) setCanvasBackground(img.src);
+    });
+  });
+
+  // also allow clicking images inside panel-area (thumbnails) to set bg (if desired)
+  document.querySelectorAll('.panel-area img').forEach(img => {
+    img.style.cursor = 'pointer';
+    img.addEventListener('click', (e) => {
+      // if image has data-bg then use that, otherwise use its src as background
+      const bg = img.dataset.bg || img.src || null;
+      if (bg) setCanvasBackground(bg);
+    });
+  });
+
+  // color input preview inside text-panel (if present)
+  const colorInput = document.querySelector('.text-panel input[type="color"]');
+  if (colorInput) {
+    colorInput.addEventListener('input', (e) => {
+      const preview = document.querySelector('.text-color-preview');
+      if (preview) preview.style.background = e.target.value;
+    });
+  }
+
+  // text OK button insert simple text onto canvas (non-drag)
+  const textOk = document.getElementById('text-ok-btn') || document.querySelector('.text-panel #text-ok-btn');
+  if (textOk) {
+    textOk.addEventListener('click', (ev) => {
+      ev.preventDefault();
+      const msgEl = document.querySelector('.text-panel .message-input');
+      if (!msgEl) return;
+      const msg = msgEl.value.trim();
+      if (!msg) return;
+      const color = (colorInput && colorInput.value) || '#000';
+      const font = (document.querySelector('.text-panel select') || {}).value || '';
+      const node = document.createElement('div');
+      node.className = 'canvas-text-item';
+      node.textContent = msg;
+      node.style.position = 'absolute';
+      node.style.left = '16px';
+      node.style.top = '16px';
+      node.style.color = color;
+      node.style.fontFamily = font || 'Poppins, sans-serif';
+      node.style.fontSize = '20px';
+      node.style.userSelect = 'none';
+      canvasArea.appendChild(node);
+    });
   }
 });
