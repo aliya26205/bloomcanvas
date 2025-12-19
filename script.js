@@ -6,6 +6,17 @@ const canvasArea = document.getElementById("canvas-area");
 const captureBtn = document.getElementById("capture-btn");
 const clearCanvasBtn = document.getElementById("clear-canvas");
 
+function getEventXY(e) {
+  if (e.touches && e.touches[0]) {
+    return {
+      x: e.touches[0].clientX,
+      y: e.touches[0].clientY
+    };
+  }
+  return { x: e.clientX, y: e.clientY };
+}
+
+
 // 🌼 Handle side button clicks
 buttons.forEach((button) => {
   button.addEventListener("click", () => {
@@ -137,12 +148,42 @@ buttons.forEach((button) => {
   });
 });
 
-panelArea.addEventListener("click", (e) => {
-  if (e.target.classList.contains("bg-option")) {
-    canvasArea.style.background = e.target.style.background;
+// panelArea.addEventListener("click", (e) => {
+//   if (e.target.classList.contains("bg-option")) {
+//     canvasArea.style.background = e.target.style.background;
+//   }
+//   if (e.target.tagName === "IMG") addImage(e.target.src);
+// });
+// panelArea.addEventListener("click", handlePanelClick);
+// panelArea.addEventListener("touchstart", handlePanelClick, { passive: false });
+
+// function handlePanelClick(e) {
+//   const target = e.target.closest(".bg-option, img");
+//   if (!target) return;
+
+//   if (target.classList.contains("bg-option")) {
+//     canvasArea.style.background = target.style.background;
+//   } else if (target.tagName === "IMG") {
+//     addImage(target.src);
+//   }
+// }
+function handlePanelClick(e) {
+  e.preventDefault();
+
+  const target = e.target.closest(".bg-option, img");
+  if (!target) return;
+
+  if (target.classList.contains("bg-option")) {
+    canvasArea.style.background = target.style.background;
+    canvasArea.style.backgroundImage = "none";
+  } else if (target.tagName === "IMG") {
+    addImage(target.src);
   }
-  if (e.target.tagName === "IMG") addImage(e.target.src);
-});
+}
+
+panelArea.addEventListener("click", handlePanelClick);
+panelArea.addEventListener("touchstart", handlePanelClick, { passive: false });
+
 
 // 🖼️ Add Image
 function addImage(src) {
@@ -261,98 +302,286 @@ function setActive(wrapper) {
 }
 
 // 🖱️ Draggable
+// function makeDraggable(el) {
+//   let offsetX,
+//     offsetY,
+//     isDragging = false;
+//   el.addEventListener("mousedown", (e) => {
+//     if (
+//       e.target.classList.contains("delete-btn") ||
+//       e.target.classList.contains("resize-handle") ||
+//       e.target.classList.contains("rotate-handle")
+//     )
+//       return;
+//     e.preventDefault();
+//     isDragging = true;
+//     const rect = el.getBoundingClientRect();
+//     const canvasRect = canvasArea.getBoundingClientRect();
+//     offsetX = e.clientX - rect.left;
+//     offsetY = e.clientY - rect.top;
+//     setActive(el);
+//   });
+//   document.addEventListener("mousemove", (e) => {
+//     if (!isDragging) return;
+//     const canvasRect = canvasArea.getBoundingClientRect();
+//     let x = e.clientX - canvasRect.left - offsetX;
+//     let y = e.clientY - canvasRect.top - offsetY;
+//     x = Math.max(0, Math.min(x, canvasArea.clientWidth - el.offsetWidth));
+//     y = Math.max(0, Math.min(y, canvasArea.clientHeight - el.offsetHeight));
+//     el.style.left = x + "px";
+//     el.style.top = y + "px";
+//     el.style.transform = "translate(0,0)";
+//   });
+//   document.addEventListener("mouseup", () => (isDragging = false));
+// }
 function makeDraggable(el) {
-  let offsetX,
-    offsetY,
-    isDragging = false;
-  el.addEventListener("mousedown", (e) => {
+  let offsetX = 0;
+  let offsetY = 0;
+  let isDragging = false;
+
+  function startDrag(e) {
     if (
       e.target.classList.contains("delete-btn") ||
       e.target.classList.contains("resize-handle") ||
       e.target.classList.contains("rotate-handle")
-    )
-      return;
+    ) return;
+
     e.preventDefault();
     isDragging = true;
+
+    const pos = getEventXY(e);
     const rect = el.getBoundingClientRect();
-    const canvasRect = canvasArea.getBoundingClientRect();
-    offsetX = e.clientX - rect.left;
-    offsetY = e.clientY - rect.top;
+
+    offsetX = pos.x - rect.left;
+    offsetY = pos.y - rect.top;
+
     setActive(el);
-  });
-  document.addEventListener("mousemove", (e) => {
+  }
+
+  function onDragMove(e) {
     if (!isDragging) return;
+
+    const pos = getEventXY(e);
     const canvasRect = canvasArea.getBoundingClientRect();
-    let x = e.clientX - canvasRect.left - offsetX;
-    let y = e.clientY - canvasRect.top - offsetY;
+
+    let x = pos.x - canvasRect.left - offsetX;
+    let y = pos.y - canvasRect.top - offsetY;
+
     x = Math.max(0, Math.min(x, canvasArea.clientWidth - el.offsetWidth));
     y = Math.max(0, Math.min(y, canvasArea.clientHeight - el.offsetHeight));
+
     el.style.left = x + "px";
     el.style.top = y + "px";
     el.style.transform = "translate(0,0)";
-  });
-  document.addEventListener("mouseup", () => (isDragging = false));
+  }
+
+  function stopDrag() {
+    isDragging = false;
+  }
+
+  // Mouse events
+  el.addEventListener("mousedown", startDrag);
+  document.addEventListener("mousemove", onDragMove);
+  document.addEventListener("mouseup", stopDrag);
+
+  // Touch events
+  el.addEventListener("touchstart", startDrag, { passive: false });
+  document.addEventListener("touchmove", onDragMove, { passive: false });
+  document.addEventListener("touchend", stopDrag);
+  document.addEventListener("touchcancel", stopDrag);
 }
 
 // ↔️ Resize
+// function makeResizable(wrapper) {
+//   const handle = document.createElement("div");
+//   handle.classList.add("resize-handle");
+//   handle.innerHTML = "↔️";
+//   Object.assign(handle.style, {
+//     width: "20px",
+//     height: "20px",
+//     background: "#333",
+//     color: "#fff",
+//     fontSize: "12px",
+//     position: "absolute",
+//     right: "-10px",
+//     bottom: "-10px",
+//     display: "none",
+//     justifyContent: "center",
+//     alignItems: "center",
+//     cursor: "se-resize",
+//     borderRadius: "50%",
+//   });
+//   wrapper.appendChild(handle);
+
+//   let isResizing = false;
+//   handle.addEventListener("mousedown", (e) => {
+//     e.stopPropagation();
+//     isResizing = true;
+//     document.body.style.userSelect = "none";
+//   });
+//   document.addEventListener("mousemove", (e) => {
+//     if (!isResizing) return;
+//     const rect = wrapper.getBoundingClientRect();
+//     const newWidth = e.clientX - rect.left;
+//     const newHeight = e.clientY - rect.top;
+//     const target = wrapper.querySelector(".resizable");
+//     if (target.tagName === "IMG") {
+//       target.style.width = newWidth + "px";
+//     } else {
+//       target.style.fontSize = Math.max(10, newHeight / 3) + "px";
+//     }
+//   });
+//   document.addEventListener("mouseup", () => {
+//     isResizing = false;
+//     document.body.style.userSelect = "";
+//   });
+// }
+
+// // 🔄 Rotate (with icon)
+// function makeRotatable(wrapper) {
+//   const rotateHandle = document.createElement("div");
+//   rotateHandle.classList.add("rotate-handle");
+//   rotateHandle.innerHTML = "⟳";
+//   Object.assign(rotateHandle.style, {
+//     width: "20px",
+//     height: "20px",
+//     background: "#4a90e2",
+//     color: "#fff",
+//     fontSize: "14px",
+//     position: "absolute",
+//     top: "-25px",
+//     left: "50%",
+//     transform: "translateX(-50%)",
+//     display: "none",
+//     justifyContent: "center",
+//     alignItems: "center",
+//     borderRadius: "50%",
+//     cursor: "grab",
+//     zIndex: "10",
+//   });
+//   wrapper.appendChild(rotateHandle);
+
+//   let isRotating = false;
+//   let startAngle = 0;
+
+//   rotateHandle.addEventListener("mousedown", (e) => {
+//     e.stopPropagation();
+//     isRotating = true;
+//     document.body.style.userSelect = "none";
+//     const rect = wrapper.getBoundingClientRect();
+//     const centerX = rect.left + rect.width / 2;
+//     const centerY = rect.top + rect.height / 2;
+//     const startX = e.clientX - centerX;
+//     const startY = e.clientY - centerY;
+//     startAngle =
+//       Math.atan2(startY, startX) - (parseFloat(wrapper.dataset.rotation) || 0);
+//     wrapper.dataset.centerX = centerX;
+//     wrapper.dataset.centerY = centerY;
+//     setActive(wrapper);
+//   });
+
+//   document.addEventListener("mousemove", (e) => {
+//     if (!isRotating) return;
+//     const centerX = parseFloat(wrapper.dataset.centerX);
+//     const centerY = parseFloat(wrapper.dataset.centerY);
+//     const x = e.clientX - centerX;
+//     const y = e.clientY - centerY;
+//     const angle = Math.atan2(y, x) - startAngle;
+//     wrapper.dataset.rotation = angle;
+//     wrapper.style.transform = `translate(-50%, -50%) rotate(${angle}rad)`;
+//   });
+
+//   document.addEventListener("mouseup", () => {
+//     isRotating = false;
+//     document.body.style.userSelect = "";
+//   });
+// }
+
 function makeResizable(wrapper) {
   const handle = document.createElement("div");
   handle.classList.add("resize-handle");
   handle.innerHTML = "↔️";
+
   Object.assign(handle.style, {
-    width: "20px",
-    height: "20px",
+    width: "24px",
+    height: "24px",
     background: "#333",
     color: "#fff",
     fontSize: "12px",
     position: "absolute",
-    right: "-10px",
-    bottom: "-10px",
+    right: "-12px",
+    bottom: "-12px",
     display: "none",
     justifyContent: "center",
     alignItems: "center",
     cursor: "se-resize",
     borderRadius: "50%",
+    zIndex: "10",
+    touchAction: "none"
   });
+
   wrapper.appendChild(handle);
 
   let isResizing = false;
-  handle.addEventListener("mousedown", (e) => {
+  let startX = 0;
+  let startWidth = 0;
+
+  function startResize(e) {
     e.stopPropagation();
+    e.preventDefault();
     isResizing = true;
-    document.body.style.userSelect = "none";
-  });
-  document.addEventListener("mousemove", (e) => {
-    if (!isResizing) return;
-    const rect = wrapper.getBoundingClientRect();
-    const newWidth = e.clientX - rect.left;
-    const newHeight = e.clientY - rect.top;
+
+    const pos = getEventXY(e);
+    startX = pos.x;
+
     const target = wrapper.querySelector(".resizable");
+    startWidth = target.offsetWidth;
+  }
+
+  function onResize(e) {
+    if (!isResizing) return;
+
+    const pos = getEventXY(e);
+    const dx = pos.x - startX;
+    const target = wrapper.querySelector(".resizable");
+
     if (target.tagName === "IMG") {
-      target.style.width = newWidth + "px";
+      target.style.width = Math.max(40, startWidth + dx) + "px";
     } else {
-      target.style.fontSize = Math.max(10, newHeight / 3) + "px";
+      target.style.fontSize = Math.max(12, (startWidth + dx) / 3) + "px";
     }
-  });
-  document.addEventListener("mouseup", () => {
+  }
+
+  function stopResize() {
     isResizing = false;
-    document.body.style.userSelect = "";
-  });
+  }
+
+  // Mouse
+  handle.addEventListener("mousedown", startResize);
+  document.addEventListener("mousemove", onResize);
+  document.addEventListener("mouseup", stopResize);
+
+  // Touch
+  handle.addEventListener("touchstart", startResize, { passive: false });
+  document.addEventListener("touchmove", onResize, { passive: false });
+  document.addEventListener("touchend", stopResize);
+  document.addEventListener("touchcancel", stopResize);
 }
 
-// 🔄 Rotate (with icon)
+
 function makeRotatable(wrapper) {
   const rotateHandle = document.createElement("div");
   rotateHandle.classList.add("rotate-handle");
   rotateHandle.innerHTML = "⟳";
+
   Object.assign(rotateHandle.style, {
-    width: "20px",
-    height: "20px",
+    width: "24px",
+    height: "24px",
     background: "#4a90e2",
     color: "#fff",
     fontSize: "14px",
     position: "absolute",
-    top: "-25px",
+    top: "-28px",
     left: "50%",
     transform: "translateX(-50%)",
     display: "none",
@@ -361,44 +590,66 @@ function makeRotatable(wrapper) {
     borderRadius: "50%",
     cursor: "grab",
     zIndex: "10",
+    touchAction: "none"
   });
+
   wrapper.appendChild(rotateHandle);
 
   let isRotating = false;
+  let centerX = 0;
+  let centerY = 0;
   let startAngle = 0;
 
-  rotateHandle.addEventListener("mousedown", (e) => {
+  function startRotate(e) {
+    e.preventDefault();
     e.stopPropagation();
     isRotating = true;
-    document.body.style.userSelect = "none";
-    const rect = wrapper.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-    const startX = e.clientX - centerX;
-    const startY = e.clientY - centerY;
-    startAngle =
-      Math.atan2(startY, startX) - (parseFloat(wrapper.dataset.rotation) || 0);
-    wrapper.dataset.centerX = centerX;
-    wrapper.dataset.centerY = centerY;
-    setActive(wrapper);
-  });
 
-  document.addEventListener("mousemove", (e) => {
+    const rect = wrapper.getBoundingClientRect();
+    centerX = rect.left + rect.width / 2;
+    centerY = rect.top + rect.height / 2;
+
+    const pos = getEventXY(e);
+    startAngle =
+      Math.atan2(pos.y - centerY, pos.x - centerX) -
+      (parseFloat(wrapper.dataset.rotation) || 0);
+
+    setActive(wrapper);
+  }
+
+  function onRotate(e) {
     if (!isRotating) return;
-    const centerX = parseFloat(wrapper.dataset.centerX);
-    const centerY = parseFloat(wrapper.dataset.centerY);
-    const x = e.clientX - centerX;
-    const y = e.clientY - centerY;
-    const angle = Math.atan2(y, x) - startAngle;
+
+    const pos = getEventXY(e);
+    const angle =
+      Math.atan2(pos.y - centerY, pos.x - centerX) - startAngle;
+
     wrapper.dataset.rotation = angle;
     wrapper.style.transform = `translate(-50%, -50%) rotate(${angle}rad)`;
-  });
+  }
 
-  document.addEventListener("mouseup", () => {
+  function stopRotate() {
     isRotating = false;
-    document.body.style.userSelect = "";
-  });
+  }
+
+  // Mouse
+  rotateHandle.addEventListener("mousedown", startRotate);
+  document.addEventListener("mousemove", onRotate);
+  document.addEventListener("mouseup", stopRotate);
+
+  // Touch
+  rotateHandle.addEventListener("touchstart", startRotate, { passive: false });
+  document.addEventListener("touchmove", onRotate, { passive: false });
+  document.addEventListener("touchend", stopRotate);
+  document.addEventListener("touchcancel", stopRotate);
 }
+
+
+
+
+
+
+
 
 // 📸 Capture Canvas
 // const hideElems = document.querySelectorAll('.delete-btn, .resize-handle, .rotate-handle');

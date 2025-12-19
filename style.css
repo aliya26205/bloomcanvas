@@ -22,15 +22,21 @@ body {
   height: 100vh;
   padding: 20px 0;
 }
+.content {
+  flex: 1;
+  display: flex;
+}
+
 
 /* 🌸 Main app container */
 .app-container {
+  min-height: 90vh;
+  height: auto;
   display: flex;
   flex-direction: column;
   background-color: #ffd6eb;
   width: 95%;
   max-width: 1400px;
-  height: 90vh;
   border-radius: 20px;
   overflow: hidden;
 }
@@ -60,7 +66,9 @@ header {
 /* 🌸 Sidebar */
 .sidebar {
  
-  width: 12%;
+  /* width: 12%; */
+  width: 70px;
+  min-width: 70px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -352,6 +360,26 @@ footer {
     color: #888;
     pointer-events: none;
 }
+.side-btn,
+button {
+  touch-action: manipulation;
+}
+/* Lock panel height so canvas never jumps */
+.panel-area {
+  min-height: 350px;
+  max-height: 350px;
+}
+.bg-option {
+  width: 70px;
+  height: 70px;
+  border-radius: 12px;
+}
+.bg-option {
+  touch-action: manipulation;
+}
+
+
+
 /* ---------- FINAL MOBILE (<=430px) - paste ONCE at file end ---------- */
 @media (max-width: 430px) {
 
@@ -410,8 +438,11 @@ footer {
 
   /* PANEL: tidy grid and scaled thumbnails */
   .panel-area {
-    flex: 0 0 180px !important;
-    max-height: 220px !important;
+    flex: 0 0 140px !important;
+    max-height: 140px !important;
+    margin-bottom: 10px !important;
+    /* flex: 0 0 180px !important;
+    max-height: 220px !important; */
     width: calc(100% - 18px) !important;
     margin: 0 auto !important;
     padding: 10px !important;
@@ -420,12 +451,15 @@ footer {
     box-shadow: 0 6px 18px rgba(0,0,0,0.04) !important;
 
     display: grid !important;
-    grid-template-columns: repeat(auto-fill, minmax(64px, 1fr)) !important;
-    grid-auto-rows: 64px !important;
+    /* grid-template-columns: repeat(auto-fill, minmax(64px, 1fr)) !important;
+    grid-auto-rows: 64px !important; */
     gap: 10px !important;
     overflow-y: auto !important;
     align-items: center !important;
     justify-items: center !important;
+
+    grid-template-columns: repeat(3, 1fr) !important;
+    grid-auto-rows: 90px !important;
   }
 
   .panel-area > * {
@@ -443,8 +477,8 @@ footer {
   .panel-area img,
   .panel-area .bg-option img,
   .panel-area .thumb img {
-    width: 80% !important;
-    height: 80% !important;
+    width: 80px !important;
+    height: 80px !important;
     object-fit: contain !important;
     display: block !important;
   }
@@ -455,18 +489,22 @@ footer {
   /* CANVAS: dominant area */
   .canvas-container {
     flex: 1 1 auto !important;
+    min-height: 320px !important;
+    padding: 10px !important;
+    /* flex: 1 1 auto !important; */
     width: calc(100% - 18px) !important;
     margin: 0 auto !important;
-    padding: 12px !important;
+    /* padding: 12px !important; */
     border-radius: 14px !important;
     background: #fff0f5 !important;
     box-shadow: 0 6px 18px rgba(0,0,0,0.04) !important;
     display: flex !important;
     justify-content: center !important;
     align-items: center !important;
-    min-height: 220px !important;
+    /* min-height: 220px !important; */
     box-sizing: border-box !important;
     overflow: hidden !important;
+
   }
 
   #canvas-area {
@@ -476,6 +514,7 @@ footer {
     background: #fff !important;
     box-sizing: border-box !important;
     overflow: auto !important;
+    
   }
 
   /* capture + clear centered below */
@@ -492,7 +531,7 @@ footer {
   }
 
   /* TEXT PANEL adjustments */
-  .text-panel {
+  /* .text-panel {
     position: relative !important;
     z-index: 200 !important;
     width: calc(100% - 24px) !important;
@@ -502,7 +541,29 @@ footer {
     border-radius: 12px !important;
     background: #ffe6f2 !important;
     box-sizing: border-box !important;
+  } */
+  /* .text-panel {
+  position: fixed !important;
+  bottom: 80px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  z-index: 999 !important;
+  max-height: 60vh !important;
+  overflow-y: auto !important;
+} */
+.text-panel {
+    position: fixed !important;
+    bottom: 90px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: calc(100% - 32px) !important;
+    max-width: 380px !important;
+    max-height: 55vh !important;
+    overflow-y: auto !important;
+    z-index: 1000 !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15) !important;
   }
+}
   .text-panel .message-input,
   .text-panel input[type="color"],
   .text-panel select {
@@ -518,4 +579,3 @@ footer {
   #foot { font-size: 14px !important; text-align: center !important; }
 
   html, body, .app-container { overflow-x: hidden !important; }
-}
