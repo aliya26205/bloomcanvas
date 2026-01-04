@@ -471,7 +471,7 @@ button {
     padding: 6px !important;
     box-sizing: border-box !important;
     border-radius: 10px !important;
-    background: transparent !important;
+    /* background: transparent !important; */
   }
 
   .panel-area img,
@@ -579,3 +579,5 @@ button {
   #foot { font-size: 14px !important; text-align: center !important; }
 
   html, body, .app-container { overflow-x: hidden !important; }
+
+  
