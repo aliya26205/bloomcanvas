@@ -150,24 +150,7 @@ buttons.forEach((button) => {
   });
 });
 
-// panelArea.addEventListener("click", (e) => {
-//   if (e.target.classList.contains("bg-option")) {
-//     canvasArea.style.background = e.target.style.background;
-//   }
-//   if (e.target.tagName === "IMG") addImage(e.target.src);
-// });
-// panelArea.addEventListener("click", handlePanelClick);
-// panelArea.addEventListener("touchstart", handlePanelClick, { passive: false });
 
-// function handlePanelClick(e) {
-//   const target = e.target.closest(".bg-option, img");
-//   if (!target) return;
-
-//   if (target.classList.contains("bg-option")) {
-//     canvasArea.style.background = target.style.background;
-//   } else if (target.tagName === "IMG") {
-//     addImage(target.src);
-//   }
 // }
 function handlePanelClick(e) {
   //e.preventDefault();
@@ -269,15 +252,7 @@ function createWrapper() {
   return wrapper;
 }
 
-// 🔘 Show active controls only on selected element
-// function setActive(wrapper) {
-//   canvasArea.querySelectorAll('div[style*="position: absolute"]').forEach(w => {
-//     w.querySelectorAll('.delete-btn, .resize-handle, .rotate-handle').forEach(btn => btn.style.display = 'none');
-//   });
-//   wrapper.querySelectorAll('.delete-btn, .resize-handle, .rotate-handle').forEach(btn => btn.style.display = 'flex');
-//   wrapper.addEventListener('mousedown', () => setActive(wrapper));
-// }
-// 🔘 Show active controls only on selected element + bring front
+
 function setActive(wrapper) {
   // Bring selected element to front
   let maxZ = 0;
@@ -303,39 +278,7 @@ function setActive(wrapper) {
   wrapper.addEventListener("mousedown", () => setActive(wrapper));
 }
 
-// 🖱️ Draggable
-// function makeDraggable(el) {
-//   let offsetX,
-//     offsetY,
-//     isDragging = false;
-//   el.addEventListener("mousedown", (e) => {
-//     if (
-//       e.target.classList.contains("delete-btn") ||
-//       e.target.classList.contains("resize-handle") ||
-//       e.target.classList.contains("rotate-handle")
-//     )
-//       return;
-//     e.preventDefault();
-//     isDragging = true;
-//     const rect = el.getBoundingClientRect();
-//     const canvasRect = canvasArea.getBoundingClientRect();
-//     offsetX = e.clientX - rect.left;
-//     offsetY = e.clientY - rect.top;
-//     setActive(el);
-//   });
-//   document.addEventListener("mousemove", (e) => {
-//     if (!isDragging) return;
-//     const canvasRect = canvasArea.getBoundingClientRect();
-//     let x = e.clientX - canvasRect.left - offsetX;
-//     let y = e.clientY - canvasRect.top - offsetY;
-//     x = Math.max(0, Math.min(x, canvasArea.clientWidth - el.offsetWidth));
-//     y = Math.max(0, Math.min(y, canvasArea.clientHeight - el.offsetHeight));
-//     el.style.left = x + "px";
-//     el.style.top = y + "px";
-//     el.style.transform = "translate(0,0)";
-//   });
-//   document.addEventListener("mouseup", () => (isDragging = false));
-// }
+
 function makeDraggable(el) {
   let offsetX = 0;
   let offsetY = 0;
@@ -393,111 +336,7 @@ function makeDraggable(el) {
   document.addEventListener("touchcancel", stopDrag);
 }
 
-// ↔️ Resize
-// function makeResizable(wrapper) {
-//   const handle = document.createElement("div");
-//   handle.classList.add("resize-handle");
-//   handle.innerHTML = "↔️";
-//   Object.assign(handle.style, {
-//     width: "20px",
-//     height: "20px",
-//     background: "#333",
-//     color: "#fff",
-//     fontSize: "12px",
-//     position: "absolute",
-//     right: "-10px",
-//     bottom: "-10px",
-//     display: "none",
-//     justifyContent: "center",
-//     alignItems: "center",
-//     cursor: "se-resize",
-//     borderRadius: "50%",
-//   });
-//   wrapper.appendChild(handle);
 
-//   let isResizing = false;
-//   handle.addEventListener("mousedown", (e) => {
-//     e.stopPropagation();
-//     isResizing = true;
-//     document.body.style.userSelect = "none";
-//   });
-//   document.addEventListener("mousemove", (e) => {
-//     if (!isResizing) return;
-//     const rect = wrapper.getBoundingClientRect();
-//     const newWidth = e.clientX - rect.left;
-//     const newHeight = e.clientY - rect.top;
-//     const target = wrapper.querySelector(".resizable");
-//     if (target.tagName === "IMG") {
-//       target.style.width = newWidth + "px";
-//     } else {
-//       target.style.fontSize = Math.max(10, newHeight / 3) + "px";
-//     }
-//   });
-//   document.addEventListener("mouseup", () => {
-//     isResizing = false;
-//     document.body.style.userSelect = "";
-//   });
-// }
-
-// // 🔄 Rotate (with icon)
-// function makeRotatable(wrapper) {
-//   const rotateHandle = document.createElement("div");
-//   rotateHandle.classList.add("rotate-handle");
-//   rotateHandle.innerHTML = "⟳";
-//   Object.assign(rotateHandle.style, {
-//     width: "20px",
-//     height: "20px",
-//     background: "#4a90e2",
-//     color: "#fff",
-//     fontSize: "14px",
-//     position: "absolute",
-//     top: "-25px",
-//     left: "50%",
-//     transform: "translateX(-50%)",
-//     display: "none",
-//     justifyContent: "center",
-//     alignItems: "center",
-//     borderRadius: "50%",
-//     cursor: "grab",
-//     zIndex: "10",
-//   });
-//   wrapper.appendChild(rotateHandle);
-
-//   let isRotating = false;
-//   let startAngle = 0;
-
-//   rotateHandle.addEventListener("mousedown", (e) => {
-//     e.stopPropagation();
-//     isRotating = true;
-//     document.body.style.userSelect = "none";
-//     const rect = wrapper.getBoundingClientRect();
-//     const centerX = rect.left + rect.width / 2;
-//     const centerY = rect.top + rect.height / 2;
-//     const startX = e.clientX - centerX;
-//     const startY = e.clientY - centerY;
-//     startAngle =
-//       Math.atan2(startY, startX) - (parseFloat(wrapper.dataset.rotation) || 0);
-//     wrapper.dataset.centerX = centerX;
-//     wrapper.dataset.centerY = centerY;
-//     setActive(wrapper);
-//   });
-
-//   document.addEventListener("mousemove", (e) => {
-//     if (!isRotating) return;
-//     const centerX = parseFloat(wrapper.dataset.centerX);
-//     const centerY = parseFloat(wrapper.dataset.centerY);
-//     const x = e.clientX - centerX;
-//     const y = e.clientY - centerY;
-//     const angle = Math.atan2(y, x) - startAngle;
-//     wrapper.dataset.rotation = angle;
-//     wrapper.style.transform = `translate(-50%, -50%) rotate(${angle}rad)`;
-//   });
-
-//   document.addEventListener("mouseup", () => {
-//     isRotating = false;
-//     document.body.style.userSelect = "";
-//   });
-// }
 
 function makeResizable(wrapper) {
   const handle = document.createElement("div");
@@ -652,20 +491,6 @@ function makeRotatable(wrapper) {
 
 
 
-
-// 📸 Capture Canvas
-// const hideElems = document.querySelectorAll('.delete-btn, .resize-handle, .rotate-handle');
-// captureBtn.addEventListener('click', () => {
-//   hideElems.forEach(e => (e.style.display = 'none'));
-
-//   html2canvas(canvasArea).then(canvas => {
-//     const link = document.createElement('a');
-//     link.download = 'my-bloom-design.png';
-//     link.href = canvas.toDataURL();
-//     link.click();
-//     hideElems.forEach(e => (e.style.display = 'flex'));
-//   });
-// });
 captureBtn.addEventListener("click", () => {
   // Re-select control icons each time before capturing
   const hideElems = canvasArea.querySelectorAll(
@@ -758,28 +583,4 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // text OK button insert simple text onto canvas (non-drag)
-  // const textOk = document.getElementById('text-ok-btn') || document.querySelector('.text-panel #text-ok-btn');
-  // if (textOk) {
-  //   textOk.addEventListener('click', (ev) => {
-  //     ev.preventDefault();
-  //     const msgEl = document.querySelector('.text-panel .message-input');
-  //     if (!msgEl) return;
-  //     const msg = msgEl.value.trim();
-  //     if (!msg) return;
-  //     const color = (colorInput && colorInput.value) || '#000';
-  //     const font = (document.querySelector('.text-panel select') || {}).value || '';
-  //     const node = document.createElement('div');
-  //     node.className = 'canvas-text-item';
-  //     node.textContent = msg;
-  //     node.style.position = 'absolute';
-  //     node.style.left = '16px';
-  //     node.style.top = '16px';
-  //     node.style.color = color;
-  //     node.style.fontFamily = font || 'Poppins, sans-serif';
-  //     node.style.fontSize = '20px';
-  //     node.style.userSelect = 'none';
-  //     canvasArea.appendChild(node);
-  //   });
-  // }
 });
