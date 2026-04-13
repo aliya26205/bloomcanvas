@@ -153,19 +153,28 @@ buttons.forEach((button) => {
 function handlePanelClick(e) {
   let target = e.target;
 
-  // Fix mobile touch issues
-  if (target.closest(".bg-option")) {
+  // ✅ FORCE correct detection for mobile
+  if (target.classList.contains("bg-option")) {
+    // ok
+  } else if (target.closest(".bg-option")) {
     target = target.closest(".bg-option");
+  } else if (target.tagName === "IMG") {
+    // ok
   } else if (target.closest("img")) {
     target = target.closest("img");
   } else {
     return;
   }
 
+  // ✅ APPLY BACKGROUND
   if (target.classList.contains("bg-option")) {
-    canvasArea.style.background = target.style.background;
+    //const bg = target.style.background;
+    const bg = window.getComputedStyle(target).backgroundColor;
+    canvasArea.style.background = bg;
+    canvasArea.style.backgroundColor = bg;   // ⭐ IMPORTANT FOR MOBILE
     canvasArea.style.backgroundImage = "none";
-  } else if (target.tagName === "IMG") {
+  } 
+  else if (target.tagName === "IMG") {
     addImage(target.src);
   }
 }
@@ -550,55 +559,55 @@ canvasArea.addEventListener("mousedown", (e) => {
   }
 });
 // BG & text-panel hookup (add at bottom of script.js)
-document.addEventListener('DOMContentLoaded', () => {
-  const canvasArea = document.getElementById('canvas-area');
-  if (!canvasArea) return;
+// document.addEventListener('DOMContentLoaded', () => {
+//   const canvasArea = document.getElementById('canvas-area');
+//   if (!canvasArea) return;
 
-  // helper to set background (color or image)
-  function setCanvasBackground(value) {
-    if (!value) return;
-    // if looks like a color (# or rgb)
-    if (/^#|^rgb|^hsl/.test(value)) {
-      canvasArea.style.backgroundImage = 'none';
-      canvasArea.style.backgroundColor = value;
-    } else {
-      // otherwise treat as image url (or src)
-      canvasArea.style.backgroundImage = `url("${value}")`;
-      canvasArea.style.backgroundSize = 'cover';
-      canvasArea.style.backgroundPosition = 'center';
-      canvasArea.style.backgroundColor = '';
-    }
-  }
+//   // helper to set background (color or image)
+//   function setCanvasBackground(value) {
+//     if (!value) return;
+//     // if looks like a color (# or rgb)
+//     if (/^#|^rgb|^hsl/.test(value)) {
+//       canvasArea.style.backgroundImage = 'none';
+//       canvasArea.style.backgroundColor = value;
+//     } else {
+//       // otherwise treat as image url (or src)
+//       canvasArea.style.backgroundImage = `url("${value}")`;
+//       canvasArea.style.backgroundSize = 'cover';
+//       canvasArea.style.backgroundPosition = 'center';
+//       canvasArea.style.backgroundColor = '';
+//     }
+//   }
 
-  // click handlers for .bg-option elements
-  document.querySelectorAll('.bg-option').forEach(el => {
-    el.style.cursor = 'pointer';
-    el.addEventListener('click', () => {
-      // prefer data-bg attribute, then data-type, then contained img src
-      const bg = el.dataset.bg || '';
-      const img = el.querySelector('img');
-      if (bg) setCanvasBackground(bg);
-      else if (img && img.src) setCanvasBackground(img.src);
-    });
-  });
+//   // click handlers for .bg-option elements
+//   document.querySelectorAll('.bg-option').forEach(el => {
+//     el.style.cursor = 'pointer';
+//     el.addEventListener('click', () => {
+//       // prefer data-bg attribute, then data-type, then contained img src
+//       const bg = el.dataset.bg || '';
+//       const img = el.querySelector('img');
+//       if (bg) setCanvasBackground(bg);
+//       else if (img && img.src) setCanvasBackground(img.src);
+//     });
+//   });
 
-  // also allow clicking images inside panel-area (thumbnails) to set bg (if desired)
-  document.querySelectorAll('.panel-area img').forEach(img => {
-    img.style.cursor = 'pointer';
-    img.addEventListener('click', (e) => {
-      // if image has data-bg then use that, otherwise use its src as background
-      const bg = img.dataset.bg || img.src || null;
-      if (bg) setCanvasBackground(bg);
-    });
-  });
+//   // also allow clicking images inside panel-area (thumbnails) to set bg (if desired)
+//   document.querySelectorAll('.panel-area img').forEach(img => {
+//     img.style.cursor = 'pointer';
+//     img.addEventListener('click', (e) => {
+//       // if image has data-bg then use that, otherwise use its src as background
+//       const bg = img.dataset.bg || img.src || null;
+//       if (bg) setCanvasBackground(bg);
+//     });
+//   });
 
-  // color input preview inside text-panel (if present)
-  const colorInput = document.querySelector('.text-panel input[type="color"]');
-  if (colorInput) {
-    colorInput.addEventListener('input', (e) => {
-      const preview = document.querySelector('.text-color-preview');
-      if (preview) preview.style.background = e.target.value;
-    });
-  }
+//   // color input preview inside text-panel (if present)
+//   const colorInput = document.querySelector('.text-panel input[type="color"]');
+//   if (colorInput) {
+//     colorInput.addEventListener('input', (e) => {
+//       const preview = document.querySelector('.text-color-preview');
+//       if (preview) preview.style.background = e.target.value;
+//     });
+//   }
 
-});
+// });
