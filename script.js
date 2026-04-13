@@ -150,13 +150,17 @@ buttons.forEach((button) => {
   });
 });
 
-
-// }
 function handlePanelClick(e) {
-  //e.preventDefault();
+  let target = e.target;
 
-  const target = e.target.closest(".bg-option, img");
-  if (!target) return;
+  // Fix mobile touch issues
+  if (target.closest(".bg-option")) {
+    target = target.closest(".bg-option");
+  } else if (target.closest("img")) {
+    target = target.closest("img");
+  } else {
+    return;
+  }
 
   if (target.classList.contains("bg-option")) {
     canvasArea.style.background = target.style.background;
@@ -166,8 +170,22 @@ function handlePanelClick(e) {
   }
 }
 
+// function handlePanelClick(e) {
+//   //e.preventDefault();
+
+//   const target = e.target.closest(".bg-option, img");
+//   if (!target) return;
+
+//   if (target.classList.contains("bg-option")) {
+//     canvasArea.style.background = target.style.background;
+//     canvasArea.style.backgroundImage = "none";
+//   } else if (target.tagName === "IMG") {
+//     addImage(target.src);
+//   }
+// }
+
 panelArea.addEventListener("click", handlePanelClick);
-panelArea.addEventListener("touchstart", handlePanelClick, { passive: false });
+//panelArea.addEventListener("touchstart", handlePanelClick, { passive: false });
 
 
 // 🖼️ Add Image
