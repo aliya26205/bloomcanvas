@@ -394,7 +394,9 @@ button {
   position: relative;
   z-index: 2000;
 }
-
+.active {
+  outline: 2px dashed #ff69b4;
+}
 
 /* ---------- FINAL MOBILE (<=430px) - paste ONCE at file end ---------- */
 @media (max-width: 430px) {
