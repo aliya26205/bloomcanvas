@@ -1,4 +1,4 @@
-/* 🌸 General Reset */
+
 #capture-btn {
   position: absolute;
   right: 20px;
@@ -552,41 +552,7 @@ button {
     box-shadow: 0 6px 18px rgba(0,0,0,0.04) !important;
   }
 
-  /* TEXT PANEL adjustments */
-  /* .text-panel {
-    position: relative !important;
-    z-index: 200 !important;
-    width: calc(100% - 24px) !important;
-    max-width: 380px !important;
-    margin: 8px auto !important;
-    padding: 12px !important;
-    border-radius: 12px !important;
-    background: #ffe6f2 !important;
-    box-sizing: border-box !important;
-  } */
-  /* .text-panel {
-  position: fixed !important;
-  bottom: 80px !important;
-  left: 50% !important;
-  transform: translateX(-50%) !important;
-  z-index: 999 !important;
-  max-height: 60vh !important;
-  overflow-y: auto !important;
-} */
-/* .text-panel {
-  position: relative !important;  
-  width: 100% !important;
-  max-width: 100% !important;
-  max-height: 100% !important;
-  overflow-y: auto !important;
-
-  padding: 12px !important;
-  border-radius: 14px !important;
-  background: #ffe6f2 !important;
-
-  box-shadow: none !important;
-  z-index: auto !important;
-} */
+  
 .text-panel {
   position: relative !important;
   display: flex !important;
