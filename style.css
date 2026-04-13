@@ -535,9 +535,10 @@ button {
     width: 100% !important;
     height: 100% !important;
     border-radius: 12px !important;
-    background: #fff !important;
+    /* background: #fff !important; */
     box-sizing: border-box !important;
     overflow: auto !important;
+    min-height: 250px;
     
   }
 

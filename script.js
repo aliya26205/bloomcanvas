@@ -10,12 +10,11 @@ function getEventXY(e) {
   if (e.touches && e.touches[0]) {
     return {
       x: e.touches[0].clientX,
-      y: e.touches[0].clientY
+      y: e.touches[0].clientY,
     };
   }
   return { x: e.clientX, y: e.clientY };
 }
-
 
 // 🌼 Handle side button clicks
 buttons.forEach((button) => {
@@ -105,39 +104,39 @@ buttons.forEach((button) => {
 
       colorPicker.addEventListener(
         "input",
-        () => (textarea.style.color = colorPicker.value)
+        () => (textarea.style.color = colorPicker.value),
       );
       fontSelect.addEventListener(
         "change",
-        () => (textarea.style.fontFamily = fontSelect.value)
+        () => (textarea.style.fontFamily = fontSelect.value),
       );
       boldBtn.addEventListener(
         "click",
         () =>
-        (textarea.style.fontWeight =
-          textarea.style.fontWeight === "bold" ? "normal" : "bold")
+          (textarea.style.fontWeight =
+            textarea.style.fontWeight === "bold" ? "normal" : "bold"),
       );
       italicBtn.addEventListener(
         "click",
         () =>
-        (textarea.style.fontStyle =
-          textarea.style.fontStyle === "italic" ? "normal" : "italic")
+          (textarea.style.fontStyle =
+            textarea.style.fontStyle === "italic" ? "normal" : "italic"),
       );
       underlineBtn.addEventListener(
         "click",
         () =>
-        (textarea.style.textDecoration =
-          textarea.style.textDecoration === "underline"
-            ? "none"
-            : "underline")
+          (textarea.style.textDecoration =
+            textarea.style.textDecoration === "underline"
+              ? "none"
+              : "underline"),
       );
 
       document.getElementById("text-ok-btn").addEventListener("click", () => {
         if (!textarea.value.trim()) return;
         const textStyles = {
           //color: textarea.style.color || "#000",
-         // color: textarea.style.color || colorPicker.value || "#000",
-          color: colorPicker.value, 
+          // color: textarea.style.color || colorPicker.value || "#000",
+          color: colorPicker.value,
           fontFamily: textarea.style.fontFamily || "Poppins",
           fontWeight: textarea.style.fontWeight || "normal",
           fontStyle: textarea.style.fontStyle || "normal",
@@ -149,35 +148,56 @@ buttons.forEach((button) => {
     }
   });
 });
-
 function handlePanelClick(e) {
   let target = e.target;
 
-  // ✅ FORCE correct detection for mobile
-  if (target.classList.contains("bg-option")) {
-    // ok
-  } else if (target.closest(".bg-option")) {
+  if (target.closest(".bg-option")) {
     target = target.closest(".bg-option");
-  } else if (target.tagName === "IMG") {
-    // ok
   } else if (target.closest("img")) {
     target = target.closest("img");
   } else {
     return;
   }
 
-  // ✅ APPLY BACKGROUND
   if (target.classList.contains("bg-option")) {
-    //const bg = target.style.background;
     const bg = window.getComputedStyle(target).backgroundColor;
-    canvasArea.style.background = bg;
-    canvasArea.style.backgroundColor = bg;   // ⭐ IMPORTANT FOR MOBILE
+
+    canvasArea.style.backgroundColor = bg;
     canvasArea.style.backgroundImage = "none";
-  } 
-  else if (target.tagName === "IMG") {
+  } else if (target.tagName === "IMG") {
     addImage(target.src);
   }
 }
+// function handlePanelClick(e) {
+//   let target = e.target;
+
+//   // ✅ FORCE correct detection for mobile
+//   if (target.classList.contains("bg-option")) {
+//     // ok
+//   } else if (target.closest(".bg-option")) {
+//     target = target.closest(".bg-option");
+//   } else if (target.tagName === "IMG") {
+//     // ok
+//   } else if (target.closest("img")) {
+//     target = target.closest("img");
+//   } else {
+//     return;
+//   }
+
+//   // ✅ APPLY BACKGROUND
+//   if (target.classList.contains("bg-option")) {
+//     //const bg = target.style.background;
+//     const bg = window.getComputedStyle(target).backgroundColor;
+//     // canvasArea.style.background = bg;
+//     // canvasArea.style.backgroundColor = bg;   // ⭐ IMPORTANT FOR MOBILE
+//     // canvasArea.style.backgroundImage = "none";
+//     canvasArea.style.backgroundColor = bg;
+//     canvasArea.style.backgroundImage = "none";
+//   }
+//   else if (target.tagName === "IMG") {
+//     addImage(target.src);
+//   }
+// }
 
 // function handlePanelClick(e) {
 //   //e.preventDefault();
@@ -195,7 +215,6 @@ function handlePanelClick(e) {
 
 panelArea.addEventListener("click", handlePanelClick);
 //panelArea.addEventListener("touchstart", handlePanelClick, { passive: false });
-
 
 // 🖼️ Add Image
 function addImage(src) {
@@ -279,7 +298,6 @@ function createWrapper() {
   return wrapper;
 }
 
-
 function setActive(wrapper) {
   // Bring selected element to front
   let maxZ = 0;
@@ -293,7 +311,7 @@ function setActive(wrapper) {
     .querySelectorAll('div[style*="position: absolute"]')
     .forEach((w) => {
       w.querySelectorAll(".delete-btn, .resize-handle, .rotate-handle").forEach(
-        (btn) => (btn.style.display = "none")
+        (btn) => (btn.style.display = "none"),
       );
     });
 
@@ -305,7 +323,6 @@ function setActive(wrapper) {
   wrapper.addEventListener("mousedown", () => setActive(wrapper));
 }
 
-
 function makeDraggable(el) {
   let offsetX = 0;
   let offsetY = 0;
@@ -316,9 +333,13 @@ function makeDraggable(el) {
       e.target.classList.contains("delete-btn") ||
       e.target.classList.contains("resize-handle") ||
       e.target.classList.contains("rotate-handle")
-    ) return;
+    )
+      return;
 
-    e.preventDefault();
+    if (e.type === "mousedown") {
+      e.preventDefault();
+    }
+   // e.preventDefault();
     isDragging = true;
 
     const pos = getEventXY(e);
@@ -363,8 +384,6 @@ function makeDraggable(el) {
   document.addEventListener("touchcancel", stopDrag);
 }
 
-
-
 function makeResizable(wrapper) {
   const handle = document.createElement("div");
   handle.classList.add("resize-handle");
@@ -385,7 +404,7 @@ function makeResizable(wrapper) {
     cursor: "se-resize",
     borderRadius: "50%",
     zIndex: "10",
-    touchAction: "none"
+    touchAction: "none",
   });
 
   wrapper.appendChild(handle);
@@ -436,7 +455,6 @@ function makeResizable(wrapper) {
   document.addEventListener("touchcancel", stopResize);
 }
 
-
 function makeRotatable(wrapper) {
   const rotateHandle = document.createElement("div");
   rotateHandle.classList.add("rotate-handle");
@@ -458,7 +476,7 @@ function makeRotatable(wrapper) {
     borderRadius: "50%",
     cursor: "grab",
     zIndex: "10",
-    touchAction: "none"
+    touchAction: "none",
   });
 
   wrapper.appendChild(rotateHandle);
@@ -489,8 +507,7 @@ function makeRotatable(wrapper) {
     if (!isRotating) return;
 
     const pos = getEventXY(e);
-    const angle =
-      Math.atan2(pos.y - centerY, pos.x - centerX) - startAngle;
+    const angle = Math.atan2(pos.y - centerY, pos.x - centerX) - startAngle;
 
     wrapper.dataset.rotation = angle;
     wrapper.style.transform = `translate(-50%, -50%) rotate(${angle}rad)`;
@@ -512,16 +529,10 @@ function makeRotatable(wrapper) {
   document.addEventListener("touchcancel", stopRotate);
 }
 
-
-
-
-
-
-
 captureBtn.addEventListener("click", () => {
   // Re-select control icons each time before capturing
   const hideElems = canvasArea.querySelectorAll(
-    ".delete-btn, .resize-handle, .rotate-handle"
+    ".delete-btn, .resize-handle, .rotate-handle",
   );
 
   // Hide all control icons
@@ -551,7 +562,7 @@ canvasArea.addEventListener("mousedown", (e) => {
       .querySelectorAll('div[style*="position: absolute"]')
       .forEach((w) => {
         w.querySelectorAll(
-          ".delete-btn, .resize-handle, .rotate-handle"
+          ".delete-btn, .resize-handle, .rotate-handle",
         ).forEach((btn) => {
           btn.style.display = "none";
         });
