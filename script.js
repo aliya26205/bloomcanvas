@@ -135,7 +135,9 @@ buttons.forEach((button) => {
       document.getElementById("text-ok-btn").addEventListener("click", () => {
         if (!textarea.value.trim()) return;
         const textStyles = {
-          color: textarea.style.color || "#000",
+          //color: textarea.style.color || "#000",
+         // color: textarea.style.color || colorPicker.value || "#000",
+          color: colorPicker.value, 
           fontFamily: textarea.style.fontFamily || "Poppins",
           fontWeight: textarea.style.fontWeight || "normal",
           fontStyle: textarea.style.fontStyle || "normal",
@@ -168,7 +170,7 @@ buttons.forEach((button) => {
 //   }
 // }
 function handlePanelClick(e) {
-  e.preventDefault();
+  //e.preventDefault();
 
   const target = e.target.closest(".bg-option, img");
   if (!target) return;
@@ -757,27 +759,27 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // text OK button insert simple text onto canvas (non-drag)
-  const textOk = document.getElementById('text-ok-btn') || document.querySelector('.text-panel #text-ok-btn');
-  if (textOk) {
-    textOk.addEventListener('click', (ev) => {
-      ev.preventDefault();
-      const msgEl = document.querySelector('.text-panel .message-input');
-      if (!msgEl) return;
-      const msg = msgEl.value.trim();
-      if (!msg) return;
-      const color = (colorInput && colorInput.value) || '#000';
-      const font = (document.querySelector('.text-panel select') || {}).value || '';
-      const node = document.createElement('div');
-      node.className = 'canvas-text-item';
-      node.textContent = msg;
-      node.style.position = 'absolute';
-      node.style.left = '16px';
-      node.style.top = '16px';
-      node.style.color = color;
-      node.style.fontFamily = font || 'Poppins, sans-serif';
-      node.style.fontSize = '20px';
-      node.style.userSelect = 'none';
-      canvasArea.appendChild(node);
-    });
-  }
+  // const textOk = document.getElementById('text-ok-btn') || document.querySelector('.text-panel #text-ok-btn');
+  // if (textOk) {
+  //   textOk.addEventListener('click', (ev) => {
+  //     ev.preventDefault();
+  //     const msgEl = document.querySelector('.text-panel .message-input');
+  //     if (!msgEl) return;
+  //     const msg = msgEl.value.trim();
+  //     if (!msg) return;
+  //     const color = (colorInput && colorInput.value) || '#000';
+  //     const font = (document.querySelector('.text-panel select') || {}).value || '';
+  //     const node = document.createElement('div');
+  //     node.className = 'canvas-text-item';
+  //     node.textContent = msg;
+  //     node.style.position = 'absolute';
+  //     node.style.left = '16px';
+  //     node.style.top = '16px';
+  //     node.style.color = color;
+  //     node.style.fontFamily = font || 'Poppins, sans-serif';
+  //     node.style.fontSize = '20px';
+  //     node.style.userSelect = 'none';
+  //     canvasArea.appendChild(node);
+  //   });
+  // }
 });

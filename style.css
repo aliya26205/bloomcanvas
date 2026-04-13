@@ -377,7 +377,23 @@ button {
 .bg-option {
   touch-action: manipulation;
 }
+.panel-area:has(.text-panel) {
+  display: block !important;
+  overflow: visible !important;
+}
+.text-panel {
+  position: relative;
+  z-index: 1000;
+}
 
+#canvas-area {
+  z-index: 1;
+}
+#text-color {
+  cursor: pointer;
+  position: relative;
+  z-index: 2000;
+}
 
 
 /* ---------- FINAL MOBILE (<=430px) - paste ONCE at file end ---------- */
