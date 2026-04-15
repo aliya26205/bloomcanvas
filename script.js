@@ -1,4 +1,4 @@
-// 🌸 BloomCanvas Script — Final Enhanced Version with Rotation Icons & Smart Controls
+// 🌸 BloomCanvas
 
 const buttons = document.querySelectorAll(".side-btn");
 const panelArea = document.getElementById("panel-area");
@@ -168,55 +168,11 @@ function handlePanelClick(e) {
     addImage(target.src);
   }
 }
-// function handlePanelClick(e) {
-//   let target = e.target;
-
-//   // ✅ FORCE correct detection for mobile
-//   if (target.classList.contains("bg-option")) {
-//     // ok
-//   } else if (target.closest(".bg-option")) {
-//     target = target.closest(".bg-option");
-//   } else if (target.tagName === "IMG") {
-//     // ok
-//   } else if (target.closest("img")) {
-//     target = target.closest("img");
-//   } else {
-//     return;
-//   }
-
-//   // ✅ APPLY BACKGROUND
-//   if (target.classList.contains("bg-option")) {
-//     //const bg = target.style.background;
-//     const bg = window.getComputedStyle(target).backgroundColor;
-//     // canvasArea.style.background = bg;
-//     // canvasArea.style.backgroundColor = bg;   // ⭐ IMPORTANT FOR MOBILE
-//     // canvasArea.style.backgroundImage = "none";
-//     canvasArea.style.backgroundColor = bg;
-//     canvasArea.style.backgroundImage = "none";
-//   }
-//   else if (target.tagName === "IMG") {
-//     addImage(target.src);
-//   }
-// }
-
-// function handlePanelClick(e) {
-//   //e.preventDefault();
-
-//   const target = e.target.closest(".bg-option, img");
-//   if (!target) return;
-
-//   if (target.classList.contains("bg-option")) {
-//     canvasArea.style.background = target.style.background;
-//     canvasArea.style.backgroundImage = "none";
-//   } else if (target.tagName === "IMG") {
-//     addImage(target.src);
-//   }
-// }
 
 panelArea.addEventListener("click", handlePanelClick);
 //panelArea.addEventListener("touchstart", handlePanelClick, { passive: false });
 
-// 🖼️ Add Image
+
 function addImage(src) {
   const wrapper = createWrapper();
   const img = document.createElement("img");
@@ -238,7 +194,7 @@ function addImage(src) {
   setActive(wrapper);
 }
 
-// ✍️ Add Styled Text
+
 function addText(text, styleObj) {
   const wrapper = createWrapper();
   const div = document.createElement("div");
@@ -263,7 +219,7 @@ function addText(text, styleObj) {
   setActive(wrapper);
 }
 
-// 🧩 Create draggable wrapper with control icons
+
 function createWrapper() {
   const wrapper = document.createElement("div");
   wrapper.style.position = "absolute";
@@ -299,14 +255,14 @@ function createWrapper() {
 }
 
 function setActive(wrapper) {
-  // Bring selected element to front
+ 
   let maxZ = 0;
   document.querySelectorAll("#canvas-area > div").forEach((el) => {
     maxZ = Math.max(maxZ, parseInt(el.style.zIndex) || 0);
   });
   wrapper.style.zIndex = maxZ + 1;
 
-  // Hide controls for all objects
+
   canvasArea
     .querySelectorAll('div[style*="position: absolute"]')
     .forEach((w) => {
@@ -315,7 +271,7 @@ function setActive(wrapper) {
       );
     });
 
-  // Show controls for selected object
+  
   wrapper
     .querySelectorAll(".delete-btn, .resize-handle, .rotate-handle")
     .forEach((btn) => (btn.style.display = "flex"));
@@ -372,12 +328,12 @@ function makeDraggable(el) {
     isDragging = false;
   }
 
-  // Mouse events
+ 
   el.addEventListener("mousedown", startDrag);
   document.addEventListener("mousemove", onDragMove);
   document.addEventListener("mouseup", stopDrag);
 
-  // Touch events
+  
   el.addEventListener("touchstart", startDrag, { passive: false });
   document.addEventListener("touchmove", onDragMove, { passive: false });
   document.addEventListener("touchend", stopDrag);
@@ -443,12 +399,12 @@ function makeResizable(wrapper) {
     isResizing = false;
   }
 
-  // Mouse
+
   handle.addEventListener("mousedown", startResize);
   document.addEventListener("mousemove", onResize);
   document.addEventListener("mouseup", stopResize);
 
-  // Touch
+
   handle.addEventListener("touchstart", startResize, { passive: false });
   document.addEventListener("touchmove", onResize, { passive: false });
   document.addEventListener("touchend", stopResize);
@@ -517,12 +473,12 @@ function makeRotatable(wrapper) {
     isRotating = false;
   }
 
-  // Mouse
+
   rotateHandle.addEventListener("mousedown", startRotate);
   document.addEventListener("mousemove", onRotate);
   document.addEventListener("mouseup", stopRotate);
 
-  // Touch
+
   rotateHandle.addEventListener("touchstart", startRotate, { passive: false });
   document.addEventListener("touchmove", onRotate, { passive: false });
   document.addEventListener("touchend", stopRotate);
@@ -530,12 +486,11 @@ function makeRotatable(wrapper) {
 }
 
 captureBtn.addEventListener("click", () => {
-  // Re-select control icons each time before capturing
+  
   const hideElems = canvasArea.querySelectorAll(
     ".delete-btn, .resize-handle, .rotate-handle",
   );
 
-  // Hide all control icons
   hideElems.forEach((e) => (e.style.display = "none"));
 
   html2canvas(canvasArea).then((canvas) => {
@@ -544,18 +499,18 @@ captureBtn.addEventListener("click", () => {
     link.href = canvas.toDataURL();
     link.click();
 
-    // Restore controls after capture
+    
     hideElems.forEach((e) => (e.style.display = "flex"));
   });
 });
 
-// 🧼 Clear Canvas (includes background)
+
 clearCanvasBtn.addEventListener("click", () => {
   canvasArea.innerHTML = "";
   canvasArea.style.background = "";
 });
 
-// Hide controls when clicking empty canvas
+
 canvasArea.addEventListener("mousedown", (e) => {
   if (e.target === canvasArea) {
     canvasArea
@@ -569,56 +524,3 @@ canvasArea.addEventListener("mousedown", (e) => {
       });
   }
 });
-// BG & text-panel hookup (add at bottom of script.js)
-// document.addEventListener('DOMContentLoaded', () => {
-//   const canvasArea = document.getElementById('canvas-area');
-//   if (!canvasArea) return;
-
-//   // helper to set background (color or image)
-//   function setCanvasBackground(value) {
-//     if (!value) return;
-//     // if looks like a color (# or rgb)
-//     if (/^#|^rgb|^hsl/.test(value)) {
-//       canvasArea.style.backgroundImage = 'none';
-//       canvasArea.style.backgroundColor = value;
-//     } else {
-//       // otherwise treat as image url (or src)
-//       canvasArea.style.backgroundImage = `url("${value}")`;
-//       canvasArea.style.backgroundSize = 'cover';
-//       canvasArea.style.backgroundPosition = 'center';
-//       canvasArea.style.backgroundColor = '';
-//     }
-//   }
-
-//   // click handlers for .bg-option elements
-//   document.querySelectorAll('.bg-option').forEach(el => {
-//     el.style.cursor = 'pointer';
-//     el.addEventListener('click', () => {
-//       // prefer data-bg attribute, then data-type, then contained img src
-//       const bg = el.dataset.bg || '';
-//       const img = el.querySelector('img');
-//       if (bg) setCanvasBackground(bg);
-//       else if (img && img.src) setCanvasBackground(img.src);
-//     });
-//   });
-
-//   // also allow clicking images inside panel-area (thumbnails) to set bg (if desired)
-//   document.querySelectorAll('.panel-area img').forEach(img => {
-//     img.style.cursor = 'pointer';
-//     img.addEventListener('click', (e) => {
-//       // if image has data-bg then use that, otherwise use its src as background
-//       const bg = img.dataset.bg || img.src || null;
-//       if (bg) setCanvasBackground(bg);
-//     });
-//   });
-
-//   // color input preview inside text-panel (if present)
-//   const colorInput = document.querySelector('.text-panel input[type="color"]');
-//   if (colorInput) {
-//     colorInput.addEventListener('input', (e) => {
-//       const preview = document.querySelector('.text-color-preview');
-//       if (preview) preview.style.background = e.target.value;
-//     });
-//   }
-
-// });
