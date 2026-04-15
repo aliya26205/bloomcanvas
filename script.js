@@ -16,7 +16,7 @@ function getEventXY(e) {
   return { x: e.clientX, y: e.clientY };
 }
 
-// 🌼 Handle side button clicks
+
 buttons.forEach((button) => {
   button.addEventListener("click", () => {
     const panelType = button.dataset.panel;
