@@ -13,7 +13,7 @@
   font-family: 'Poppins', sans-serif;
 }
 
-/* 🌸 Body setup */
+
 body {
   background-color: #ffc6e2;
   display: flex;
@@ -28,7 +28,6 @@ body {
 }
 
 
-/* 🌸 Main app container */
 .app-container {
   min-height: 90vh;
   height: auto;
@@ -41,7 +40,7 @@ body {
   overflow: hidden;
 }
 
-/* 🌸 Header */
+
 header {
   background-color: #fdc4e2;
   padding: 15px 20px;
@@ -55,7 +54,7 @@ header {
   font-weight: 700;
 }
 
-/* 🌸 Main workspace layout */
+
 .main-layout {
   flex: 1;
   display: flex;
@@ -63,10 +62,8 @@ header {
   padding: 15px;
 }
 
-/* 🌸 Sidebar */
+
 .sidebar {
- 
-  /* width: 12%; */
   width: 70px;
   min-width: 70px;
   display: flex;
@@ -95,7 +92,7 @@ header {
 
 
 
-/* 🌸 Canvas container (right) */
+
 .canvas-container {
   flex: 2;
   background-color: #fff0f5;
@@ -116,7 +113,7 @@ header {
   background-color: #ffffff;
 }
 
-/* 🌸 Capture button inside canvas */
+
 #capture-btn {
   position: absolute;
   right: 20px;
@@ -135,7 +132,7 @@ header {
   transform: scale(1.1);
 }
 
-/* 🌸 Footer */
+
 footer {
   background-color: #ffd6eb;
   padding: 10px 0;
@@ -155,13 +152,13 @@ footer {
 
 .workspace {
   display: flex;
-  flex: 1; /* take remaining height */
+  flex: 1; 
   gap: 10px;
 }
 
 .main-layout {
   flex: 1;
-  display: flex; /* panel + canvas side by side */
+  display: flex; 
   gap: 10px;
 }
 #clear-canvas {
@@ -191,7 +188,7 @@ footer {
 .canvas-item .resize-handle:hover {
   transform: scale(1.1);
 }
-/* 🌸 Panel area (middle) */
+
 .panel-area {
   flex: 1;
   background-color: #ffffff;
@@ -203,7 +200,7 @@ footer {
   align-items: center;
   gap: 15px;
   overflow-y: auto;
-  max-height: 350px; /* you can adjust height */
+  max-height: 350px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
@@ -222,7 +219,7 @@ footer {
 .panel-area .bg-option:hover {
   transform: scale(1.2);
 }
-/* Optional scrollbar styling */
+
 .panel-area::-webkit-scrollbar {
     width: 6px;
 }
@@ -242,7 +239,7 @@ footer {
   border-radius: 20px;
   padding: 15px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-  overflow: hidden; /* removes scrollbars */
+  overflow: hidden; 
   grid-column: span 3;
 }
 .text-panel form,
@@ -282,7 +279,7 @@ footer {
 .text-controls button:hover {
   background: #d6d6d6;
 }
-/* 🌸 Text area for text panel */
+
 .message-input {
   width: 100%;
   height: 80px;
@@ -318,7 +315,7 @@ footer {
   display: none;
 }
 .image-controls {
-  display: none; /* hide by default */
+  display: none; 
   position: absolute;
   top: -25px;
   left: 50%;
@@ -332,18 +329,18 @@ footer {
 }
 .stem {
   position: relative;
-  z-index: 1; /* stay behind the pot */
+  z-index: 1; 
 }
 
 .pot {
   position: relative;
-  z-index: 5; /* pot always in front */
+  z-index: 5; 
 }
 .flower, .plant {
   position: relative;
 }
 .pot {
-  overflow: hidden; /* hides the lower part of stems inside */
+  overflow: hidden; 
 }
 .bg-option.no-bg {
     background: #ffffff;
@@ -364,7 +361,7 @@ footer {
 button {
   touch-action: manipulation;
 }
-/* Lock panel height so canvas never jumps */
+
 .panel-area {
   min-height: 350px;
   max-height: 350px;
@@ -398,7 +395,7 @@ button {
   outline: 2px dashed #ff69b4;
 }
 
-/* ---------- FINAL MOBILE (<=430px) - paste ONCE at file end ---------- */
+/* ---------- MOBILE PART---------- */
 @media (max-width: 430px) {
 
   .app-container {
@@ -454,7 +451,7 @@ button {
     height: auto !important;
   }
 
-  /* PANEL: tidy grid and scaled thumbnails */
+  
   .panel-area {
     flex: 0 0 140px !important;
     max-height: 140px !important;
@@ -491,7 +488,7 @@ button {
     border-radius: 10px !important;
     /* background: transparent !important; */
   }
-/* 🔑 when text panel is open, disable grid squeezing */
+
 .panel-area:has(.text-panel) {
   display: flex !important;
   flex-direction: column !important;
@@ -510,7 +507,6 @@ button {
   .panel-area::-webkit-scrollbar { height: 8px; }
   .panel-area::-webkit-scrollbar-thumb { background: rgba(255,153,204,0.6); border-radius: 8px; }
 
-  /* CANVAS: dominant area */
   .canvas-container {
     flex: 1 1 auto !important;
     min-height: 320px !important;
@@ -542,7 +538,7 @@ button {
     
   }
 
-  /* capture + clear centered below */
+
   #capture-btn, #clear-canvas {
     position: static !important;
     display: inline-flex !important;
