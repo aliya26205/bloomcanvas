@@ -139,10 +139,11 @@ bloomcanvas/
 
 ## 👩‍💻 Author
 
-**Aliya Banu**
+**Aliya Banu**  
 
----
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?logo=linkedin)](https://www.linkedin.com/in/aliya-banu26/)  
+[![GitHub](https://img.shields.io/badge/GitHub-Profile-black?logo=github)](https://github.com/YOUR-USERNAME)
 
 ## 💖 Inspiration
 
-Inspired by Canva to simplify creative design experiences.
+This project idea was inspired by a design-related reel, which motivated me to build a simple interactive design tool from scratch using web technologies.
